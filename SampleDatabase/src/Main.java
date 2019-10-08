@@ -1,7 +1,6 @@
 
 public class Main {
 	public static void main(String[] args) {
-		
-	}rdgdxgfdghdfs
+		System.out.println("Guggio era un bel bambino");
+	}
 }
-s
