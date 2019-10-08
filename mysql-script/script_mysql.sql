@@ -19,3 +19,5 @@ create table visite(
     foreign key (fk_dottore) references dottore(codfisc),
     foreign key (fk_paziente) references paziente(codfisc)
 )engine=InnoDB;
+
+INSERT INTO `paziente` VALUES ('filippo','bellino'),('leonardo','ciaccio'),('leonardo','ciccettino'),('zaccaria','fruzza');
