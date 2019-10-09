@@ -17,47 +17,110 @@ import java.util.Scanner;
  * @author Guggio
  */
 public class Start {
+    static Scanner sc = new Scanner(System.in);
+    
     public static void main(String[] args) throws SQLException{
-        
-        
-        try(
-                Connection co = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinica", "root", "");
-                PreparedStatement ps = co.prepareStatement("select codfisc from clinica.paziente where name = ?;");
-                ){
-            ps.setString(1, nome);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                System.out.println(rs.getString(1));
-            }
-            co.close();
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        showMenu();
     }
     
     public static void showMenu(){
-        Scanner sc = new Scanner(System.in);
         String type = "";
-        System.out.println("Inserisci \"d\" se sei un dottore, \"p\" se sei un paziente:);");
-        type = sc.nextLine();
-        if(type.equals("d"))
-            choicesDoc();
-        else if(type.equals("p"))
-            choicesPat();
-        else{
-            System.out.println("Input errato, inserisci d o p");
-        }
-        System.out.println("Inserisci il comando:");
-        System.out.println("\t1 -> Crea Appuntamento");
-        System.out.println("\t2 -> Cancella Appuntamento");
-        System.out.println("\t3 -> ")
-    }
-    
-    public static void choicesDoc(){
-        System.out.println("");
-    }
-    
-    public static void choicesPat(){
+        String exit = "";
+        String codFisc = "";
         
+        System.out.println("Type \"d\" if you're a doctor, \"p\" if you are a patient: ");
+        type = sc.nextLine();
+        System.out.println("Type identification:");
+        codFisc = sc.nextLine();
+        
+        while(!exit.equals("q")){
+            switch (type) {
+                case "d":
+                    exit = choicesDoc(codFisc);
+                    break;
+                case "p":
+                    exit = choicesPat(codFisc);
+                    break;
+                default:
+                    System.out.println("Error, type d or p");
+                    break;
+            }
+        }
+    }
+    
+    /*
+        codFisc -> paziente
+        date -> data
+    */
+    public static String choicesDoc(String codFisc){
+        String choice = "";
+        String date = "";
+        System.out.println("Type command: ");
+        System.out.println("\t1 -> Show Agenda");
+        System.out.println("\tq -> Quit");
+        choice = sc.nextLine();
+        switch(choice){
+            case "1": 
+                System.out.println("Type date in the format YYYY-MM-DD:");
+                date = sc.nextLine();
+                //TODO funzione mostra agenda
+                break;
+            case "q":
+                return "q";
+            default:
+                System.out.println("Invalid command.");
+                return "err";
+        }
+        return "ok";
+    }
+    
+    /*  
+        codFisc -> paziente
+        docCodFisc -> dottore
+        date -> data iniziale
+        finaleDate -> data finale
+    */
+    public static String choicesPat(String codFisc){
+        String choice = "";
+        String docCodFisc = "";
+        String date = "";
+        System.out.println("Type command: ");
+        System.out.println("\t1 -> Create Medical");
+        System.out.println("\t2 -> drop Medical");
+        System.out.println("\t3 -> Change Medical date");
+        System.out.println("\tq -> Quit");
+        choice = sc.nextLine();
+        switch(choice){
+            case "1":
+                System.out.println("Type doctor identification: ");
+                docCodFisc = sc.nextLine();
+                System.out.println("Type date in the format YYYY-MM-DD:");
+                date = sc.nextLine();
+                //TODO funzione crea appuntamento
+                break;
+            case "2":
+                System.out.println("Type doctor identification: ");
+                docCodFisc = sc.nextLine();
+                System.out.println("Type date in the format YYYY-MM-DD:");
+                date = sc.nextLine();
+                //TODO funzione cancella appuntamento
+                break;
+            case "3":
+                String finalDate = "";
+                System.out.println("Type doctor identification: ");
+                docCodFisc = sc.nextLine();
+                System.out.println("Type curret date of medical in the format YYYY-MM-DD:");
+                date = sc.nextLine();
+                System.out.println("Type final date of medical in the format YYYY-MM-DD:");
+                finalDate = sc.nextLine();
+                //TODO funzione sposta appuntamento
+                break;
+            case "q":
+                return "q";
+            default:
+                System.out.println("Invalid command.");
+                return "err";
+        }
+        return "ok";
     }
 }
