@@ -32,7 +32,7 @@ public class Start {
 
     static Scanner sc = new Scanner(System.in);
     
-
+    
     public static void main(String[] args) throws SQLException{
         showMenu();
     }
@@ -97,6 +97,7 @@ public class Start {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
     
     public static void deleteMedical(String date, String doctor, String patient) throws SQLException{
         try(
@@ -115,7 +116,8 @@ public class Start {
         }catch(SQLException e){
             e.printStackTrace();
         }
-        
+    }
+    
     public static void updateMedical(String oldDate, String newDate, String doctor, String patient) throws SQLException{
         try(
                 PreparedStatement ps = general_conn.prepareStatement(
@@ -136,12 +138,12 @@ public class Start {
             e.printStackTrace();
         }
     }
-        
+
     public static void showMenu(){
         String type = "";
         String exit = "";
         String codFisc = "";
-        
+
         System.out.println("Type \"d\" if you're a doctor, \"p\" if you are a patient: ");
         type = sc.nextLine();
         System.out.println("Type identification:");
@@ -161,6 +163,7 @@ public class Start {
             }
         }
     }
+    
     
     /*
         codFisc -> dottore
