@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Guggio
+ * @author Guggio 
  */
 public class Start {
     static Scanner sc = new Scanner(System.in);
