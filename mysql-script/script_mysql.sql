@@ -7,12 +7,14 @@ create table paziente(
 )engine=InnoDB;
 
 create table dottore(
+	nome varchar(50),
 	codfisc varchar(50) primary key,
     stipendio int
 )engine=InnoDB;
 
 create table visite(
 	tipo varchar(50),
+    data date,
     fk_dottore varchar(50),
     fk_paziente varchar(50),
     primary key (fk_dottore, fk_paziente),
@@ -21,3 +23,4 @@ create table visite(
 )engine=InnoDB;
 
 INSERT INTO `paziente` VALUES ('filippo','bellino'),('leonardo','ciaccio'),('leonardo','ciccettino'),('zaccaria','fruzza');
+INSERT INTO `clinica`.`dottore` (`codfisc`, `stipendio`, `nome`) VALUES ('bellino', '1000', 'toccaferro');

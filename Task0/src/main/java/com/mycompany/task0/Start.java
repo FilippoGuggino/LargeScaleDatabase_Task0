@@ -18,8 +18,7 @@ import java.util.Scanner;
  */
 public class Start {
     public static void main(String[] args) throws SQLException{
-        Scanner sc = new Scanner(System.in);
-        String nome = sc.nextLine();
+        
         
         try(
                 Connection co = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinica", "root", "");
@@ -34,5 +33,31 @@ public class Start {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+    
+    public static void showMenu(){
+        Scanner sc = new Scanner(System.in);
+        String type = "";
+        System.out.println("Inserisci \"d\" se sei un dottore, \"p\" se sei un paziente:);");
+        type = sc.nextLine();
+        if(type.equals("d"))
+            choicesDoc();
+        else if(type.equals("p"))
+            choicesPat();
+        else{
+            System.out.println("Input errato, inserisci d o p");
+        }
+        System.out.println("Inserisci il comando:");
+        System.out.println("\t1 -> Crea Appuntamento");
+        System.out.println("\t2 -> Cancella Appuntamento");
+        System.out.println("\t3 -> ")
+    }
+    
+    public static void choicesDoc(){
+        
+    }
+    
+    public static void choicesPat(){
+        
     }
 }
