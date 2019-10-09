@@ -83,6 +83,7 @@ public class Start {
                            "insert into visita"
                          + "values "
                          + "(?,?,?,?);");
+                
                 ){
             ps.setString(1, type);
             ps.setString(2, date);
