@@ -1,11 +1,11 @@
 prima verifica se è un dottore o un paziente chiedendo il codice fiscale
 
 un dottore può vedere la sua agenda immettendo:
-	nome dottre
+	nome dottore
 	data
 
 un paziente può vedere i suoi appuntamenti immettendo:
-	nome paziente
+            nome paziente
 
 cancellazione e inserimento di un appuntamento immettendo:
 	nome paziente
