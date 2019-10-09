@@ -54,7 +54,7 @@ public class Start {
     }
     
     public static void choicesDoc(){
-        
+        System.out.println("");
     }
     
     public static void choicesPat(){
