@@ -22,22 +22,21 @@ import java.util.Scanner;
  */
 public class Start {
 
-    try(
-            static Connection general_conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinica", "root", "");
-            )
-    {}catch(SQLException e){
-        e.printStackTrace();
-     }
-        
+    static Connection general_conn;
 
     static Scanner sc = new Scanner(System.in);
     
-    
-    public static void main(String[] args) throws SQLException{
+
+    public static void main(String[] args) {
+        try {
+            general_conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinica", "root", "studenti");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
         showMenu();
     }
     
-    public static void getAgenda(String doctor, String date) throws SQLException{
+    public static void getAgenda(String doctor, String date){
         try(
                 PreparedStatement ps = general_conn.prepareStatement(
                            "select fk_paziente "
@@ -57,7 +56,7 @@ public class Start {
         }
     }
     
-    public static void getMedicals(String doctor, String patient) throws SQLException{
+    public static void getMedicals(String doctor, String patient) {
         try(
                 PreparedStatement ps = general_conn.prepareStatement(
                            "select data "
@@ -77,13 +76,12 @@ public class Start {
         }
     }
     
-    public static void newMedical(String type, String date, String doctor, String patient) throws SQLException{
+    public static void newMedical(String type, String date, String doctor, String patient) {
         try(
                 PreparedStatement ps = general_conn.prepareStatement(
                            "insert into visita"
                          + "values "
                          + "(?,?,?,?);");
-                
                 ){
             ps.setString(1, type);
             ps.setString(2, date);
@@ -99,7 +97,7 @@ public class Start {
         }
     }
     
-    public static void deleteMedical(String date, String doctor, String patient) throws SQLException{
+    public static void deleteMedical(String date, String doctor, String patient) {
         try(
                 PreparedStatement ps = general_conn.prepareStatement(
                            "delete from visita"
@@ -117,8 +115,8 @@ public class Start {
             e.printStackTrace();
         }
     }
-    
-    public static void updateMedical(String oldDate, String newDate, String doctor, String patient) throws SQLException{
+        
+    public static void updateMedical(String oldDate, String newDate, String doctor, String patient) {
         try(
                 PreparedStatement ps = general_conn.prepareStatement(
                            "update visita"
@@ -138,12 +136,12 @@ public class Start {
             e.printStackTrace();
         }
     }
-
+        
     public static void showMenu(){
         String type = "";
         String exit = "";
         String codFisc = "";
-
+        
         System.out.println("Type \"d\" if you're a doctor, \"p\" if you are a patient: ");
         type = sc.nextLine();
         System.out.println("Type identification:");
@@ -163,7 +161,6 @@ public class Start {
             }
         }
     }
-    
     
     /*
         codFisc -> dottore
@@ -247,4 +244,8 @@ public class Start {
         }
         return "ok";
     }
+    
+    
+    
+    
 }
