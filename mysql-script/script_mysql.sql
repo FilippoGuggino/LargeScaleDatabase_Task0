@@ -45,9 +45,9 @@ create table move_request(
     foreign key (fk_medical) references medical(code)
 )engine=InnoDB;
 
-insert into doctor values (1,"Francesco", "Toccaferro", 1200), (2,"Leonardo", "Cecchelli", 2000), (3,"Filippo", "Guggino", 2100);
+insert into doctor values (1,"Francesco", "Toccaferro"), (2,"Leonardo", "Cecchelli"), (3,"Filippo", "Guggino");
 insert into patient values (1,"Carlo", "Vallati"), (2,"Giuseppe", "Lettieri"), (3,"Giuseppe", "Anastasi");
-insert into employee values (1,"Vittoria", "Dattilo", 1500), (2,"Emilio", "Paolini", 1000), (3,"Zaccaria", "Essaid", 100);
+insert into employee values (1,"Vittoria", "Dattilo"), (2,"Emilio", "Paolini"), (3,"Zaccaria", "Essaid");
 insert into medical (fk_doctor,fk_patient,medical_date)values (2,1,'2019-10-25'),(1,2,'2019-10-23'),(3,3,'2019-10-21'),(3,1,'2019-10-22');
 
 
