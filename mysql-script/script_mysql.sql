@@ -1,26 +1,49 @@
-create database clinica;
+drop database clinic;
+create database clinic;
 
-use clinica;
-create table paziente(
+use clinic;
+create table patient(
+	IDCode int primary key auto_increment,
     name varchar(50),
-    codfisc varchar(50) primary key
+    surname varchar(50)
 )engine=InnoDB;
 
-create table dottore(
-    nome varchar(50),
-    codfisc varchar(50) primary key,
-    stipendio int
+create table doctor(
+	IDCode int primary key auto_increment,
+    name varchar(50),
+    surname varchar(50),
+    salary int
 )engine=InnoDB;
 
-create table visita(
-    tipo varchar(50),
-    data date,
-    fk_dottore varchar(50),
-    fk_paziente varchar(50),
-    primary key (fk_dottore, fk_paziente, data),
-    foreign key (fk_dottore) references dottore(codfisc),
-    foreign key (fk_paziente) references paziente(codfisc)
+create table employee(
+	IDCode int primary key auto_increment,
+    name varchar(50),
+    surname varchar(50),
+    salary int
 )engine=InnoDB;
 
-INSERT INTO `paziente` VALUES ('filippo','bellino'),('leonardo','ciaccio'),('leonardo','ciccettino'),('zaccaria','fruzza');
-INSERT INTO `clinica`.`dottore` (`codfisc`, `stipendio`, `nome`) VALUES ('bellino', '1000', 'toccaferro');
+create table medical(
+	code int primary key auto_increment,
+    fk_doctor int,
+    fk_patient int,
+    medical_date date,
+    approved bool default false, # so another table for create requests isn't needed
+    unique (fk_doctor, fk_patient, medical_date),
+    foreign key (fk_doctor) references doctor(IDCode),
+    foreign key (fk_patient) references patient(IDCode)
+)engine=InnoDB;
+
+create table delete_request(
+	fk_medical int primary key,
+    foreign key (fk_medical) references medical(code)
+)engine=InnoDB;
+
+create table move_request(
+	fk_medical int primary key,
+    new_date date,
+    foreign key (fk_medical) references medical(code)
+)engine=InnoDB;
+
+
+
+
