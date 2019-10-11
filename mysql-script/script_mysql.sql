@@ -13,7 +13,6 @@ create table doctor(
 	IDCode int primary key auto_increment,
     name varchar(50),
     surname varchar(50),
-    salary int,
     unique(name,surname)
 )engine=InnoDB;
 
@@ -21,7 +20,6 @@ create table employee(
 	IDCode int primary key auto_increment,
     name varchar(50),
     surname varchar(50),
-    salary int,
     unique(name,surname)
 )engine=InnoDB;
 
