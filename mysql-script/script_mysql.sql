@@ -273,7 +273,7 @@ delimiter $$
 create procedure get_personal_schedule(patient int)
 begin
 	select d.name, d.surname, m.date
-    from medical m inner join doctor d on m.fk_doctor = d.IDCode
+    from medical m inner join doctor d on m.fk_doctor = d.IDCode 
     where m.fk_patient = patient;
 end $$
 delimiter ;
@@ -290,13 +290,28 @@ end $$
 delimiter ;
 
 /*used by employees to get a schedule by a paramether*/
-drop procedure if exists get_schedule;
+drop procedure if exists get_day_schedule;
 delimiter $$
-create procedure get_schedule(by_patient int, by_date date, by_doctor int) 
+create procedure get_day_schedule(by_date date)
 /*set integer params to 0 if you don't want to select by that paramehter.
 set by_date  = '' if you don't want to select by date*/
 begin
-	
+	select d.name, d.surname, p.name, p.surname
+    from medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode
+    where m.medical_date = by_date;
+end $$
+delimiter ;
+
+/*used by employees to get a schedule by a paramether*/
+drop procedure if exists get_doctor_schedule;
+delimiter $$
+create procedure get_doctor_schedule(by_doctor int)
+/*set integer params to 0 if you don't want to select by that paramehter.
+set by_date  = '' if you don't want to select by date*/
+begin
+	select p.name, p.surname, m.date
+    from medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode
+    where m.fk_doctor = by_doctor;
 end $$
 delimiter ;
 
