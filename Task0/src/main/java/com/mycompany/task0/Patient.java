@@ -18,6 +18,6 @@ public class Patient extends User {
   
     public Patient (String Name, String Surname) {
         //uses super class constructor
-        super(Name,Surname,'patient');
+        super(Name,Surname,'p');
     }
 }
