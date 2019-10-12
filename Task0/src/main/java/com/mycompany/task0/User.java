@@ -34,7 +34,7 @@ public class User {
         }
         signIn();
     }
-     private void signIn() throws SQLException{
+     protected void signIn() throws SQLException{
         CallableStatement cs = Interface.connection.prepareCall("{CALL get_code(?,?,?)}");
         cs.setString(1, name);
         cs.setString(2, surname);
