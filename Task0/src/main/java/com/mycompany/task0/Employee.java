@@ -34,9 +34,9 @@ public class Employee extends User{
      * @param doctor a Doctor instance to identify the doctor of the new medical.
      * @param date the date of the new medical, in the format "YYYY-MM-DD"
      * @throws SQLException if an SQL exception occurred retrieving related
-    *                      records in the database
-    *  @return      true if medical was correctly added, false if something went wrong.
-    */
+     *                      records in the database
+     * @return      true if medical was correctly added, false if something went wrong.
+     */
     public boolean addMedical(Patient patient,Doctor doctor, String date) throws SQLException {
         int patCode=patient.getIdCode();
         int docCode=doctor.getIdCode();
@@ -58,9 +58,9 @@ public class Employee extends User{
      * @param doctor a Doctor instance used to retrieve the target medical.
      * @param date the date of the medical to be dropped, in the format "YYYY-MM-DD"
      * @throws SQLException if an SQL exception occurred retrieving related
-    *                      records in the database
-    *  @return      true if medical was correctly dropped, false if something went wrong.
-    */
+     *                      records in the database
+     * @return      true if medical was correctly dropped, false if something went wrong.
+     */
     public boolean dropMedical(Patient patient,Doctor doctor, String date) throws SQLException {
         int patCode=patient.getIdCode();
         int docCode=doctor.getIdCode();
@@ -85,9 +85,9 @@ public class Employee extends User{
      * @param date the date of the new medical, in the format "YYYY-MM-DD"
      * @param approved if its value is 1 then request is accepted, otherwise it's rejected.
      * @throws SQLException if an SQL exception occurred retrieving related
-    *                      records in the database
-    *  @return      true if request was correctly handled, false if something went wrong.
-    */
+     *                      records in the database
+     * @return      true if request was correctly handled, false if something went wrong.
+     */
     public boolean handleMedicalRequest(Patient patient,Doctor doctor, String date, int approved) throws SQLException{
         int patCode=patient.getIdCode();
         int docCode=doctor.getIdCode();
@@ -118,9 +118,9 @@ public class Employee extends User{
      * @param date the date of the new medical, in the format "YYYY-MM-DD"
      * @param approved if its value is 1 then delete request is accepted, otherwise it's rejected.
      * @throws SQLException if an SQL exception occurred retrieving related
-    *                      records in the database
-    *  @return      true if delete request was correctly handled, false if something went wrong.
-    */
+     *                      records in the database
+     * @return      true if delete request was correctly handled, false if something went wrong.
+     */
     public boolean handleDeleteRequest(Patient patient,Doctor doctor, String date, int approved) throws SQLException{
         int patCode=patient.getIdCode();
         int docCode=doctor.getIdCode();
@@ -153,9 +153,9 @@ public class Employee extends User{
      *                 to retrieve the medical record in the database"
      * @param approved if its value is 1 then request is accepted, otherwise it's rejected.
      * @throws SQLException if an SQL exception occurred retrieving related
-    *                      records in the database
-    *  @return      true if request was correctly handled, false if something went wrong.
-    */
+     *                      records in the database
+     * @return      true if request was correctly handled, false if something went wrong.
+     */
     public boolean handleMoveRequest(Patient patient,Doctor doctor, String old_date, int approved) throws SQLException{
         int patCode=patient.getIdCode();
         int docCode=doctor.getIdCode();
@@ -227,31 +227,28 @@ public class Employee extends User{
     
     /**
      * prints the schedule of next medicals, filtering results by a patient, a doctor, a date
-     * or any combination of these three paramethers; patient and doctor aren't used to filter
-     * the result set if their idCode attribute is 0 (they don't have a related record in the database),
-     * whilst byDate isn't used to filter the result set if its value is an empty string.
-     * @param patient a Patient instance, if its idCode is not 0 it has a related record in the
-     *                database and only medicals involving this patient will be shown
-     * @param doctor  a Doctor instance, if its idCode is not 0 it has a related record in the
-     *                database and only medicals involving this doctor will be shown
+     * or any combination of these three paramethers; to prevent a paramether from filtering results
+     * the null value can be assigned to patient and doctor, and the empty string to byDate.
+     * @param patient a Patient instance, if its value is not null then this paramether is used
+     *                to filter the result set so that only medicals involving this patient will be shown
+     * @param doctor  a Doctor instance, if its value is not null then this paramether is used
+     *                to filter the result set so that only medicals involving this doctor will be shown
      * @param byDate  a String that may contain either an empty string or a date in "YYYY-MM-DD" format:
      *                in the first case this paramether isn't used to filter the result set,
      *                in the second case only medicals scheduled in this date will be shown
-     * @throws SQLException 
+     * @throws SQLException if an SQL exception occurred while preparing or executing the query
      */
     public void printSchedule(Patient patient, Doctor doctor, String byDate) throws SQLException{
-        int patCode=patient.getIdCode();
-        int docCode=doctor.getIdCode();
         
         String query = " select d.name, d.surname, p.name, p.surname, m.medical_date"
                      + " from medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
                      + " where ";
         boolean previous = false;
-        if(patCode != 0) {
+        if(patient != null) {
             query += "m.fk_patient = ?";
             previous = true;
         }
-        if(docCode != 0) {
+        if(doctor != null) {
             if(previous)
                 query += " and ";
             query += " m.fk_doctor = ?";
@@ -266,11 +263,11 @@ public class Employee extends User{
         
         PreparedStatement ps = Interface.connection.prepareStatement(query);
         int counter = 1;
-        if(patCode != 0) {
-            ps.setInt(counter++, patCode);
+        if(patient != null) {
+            ps.setInt(counter++, patient.getIdCode());
         }
-        if(docCode != 0) {
-            ps.setInt(counter++, docCode);
+        if(doctor != null) {
+            ps.setInt(counter++, doctor.getIdCode());
         }
         if(byDate.compareTo("") != 0) {
             ps.setString(counter++, byDate);
