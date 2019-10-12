@@ -176,7 +176,7 @@ begin
 					where code = med_code;
                     select 1;
 				end;
-			elseif (result =0 and consistency = 1)
+			elseif (result <> 1 and consistency = 1)
             then
 				begin
 					delete from delete_request
@@ -219,7 +219,7 @@ begin
                     where fk_medical = med_code;
                     select 1;
 				end;
-			elseif (result =0 and update_date is not null)
+			elseif (result <> 1 and update_date is not null)
             then
 				begin
 					delete from move_request
