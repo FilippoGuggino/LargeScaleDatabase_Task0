@@ -13,10 +13,10 @@ import java.sql.*;
  */
 public class User {
     
-    private String name;
-    private String surname;
-    private String role;
-    private int idCode;
+    protected String name;
+    protected String surname;
+    protected String role;
+    protected int idCode;
     
     public User(String name,String surname, String role)throws SQLException{
         this.name=name;
