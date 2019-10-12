@@ -54,9 +54,9 @@ public class Interface {
         while(!exit.equals("q")){
             switch (type) {
                 case "1": 
-                    System.out.println("Insert your name:");
+                    System.out.println("Type your first name:");
                     name = sc.nextLine();
-                    System.out.println("Insert your surname:");
+                    System.out.println("Type your last name:");
                     surname = sc.nextLine();
                     user=new User(name,surname,role);
                    
@@ -67,9 +67,9 @@ public class Interface {
                     break;
                     
                 case "2":
-                    System.out.println("Insert your name:");
+                    System.out.println("Type your first name:");
                     name = sc.nextLine();
-                    System.out.println("Insert your surname:");
+                    System.out.println("type your last name:");
                     surname = sc.nextLine();
                     
                         user=new User(name,surname,role);             
@@ -78,7 +78,7 @@ public class Interface {
                             System.out.println("Registration successfully completed!");
                         }
                         else
-                            System.out.println("The user already exists");
+                            System.out.println("User already exists");
                      
                     break;
                 default:
@@ -232,8 +232,7 @@ public class Interface {
                 
                 System.out.println("Type patient surname: ");
                 patSurname = sc.nextLine();
-                p=null;
-                    p=new Patient(patName,patSurname);
+                p=new Patient(patName,patSurname);
                 
                 if(p.getIdCode()==0){
                     System.out.println("The patient you selected doesn't exist");
