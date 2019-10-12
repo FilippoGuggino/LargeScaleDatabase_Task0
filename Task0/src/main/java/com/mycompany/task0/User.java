@@ -19,6 +19,10 @@ public class User {
     protected int idCode;
     
     public User(String name,String surname, String role)throws SQLException{
+        if(name.compareTo("") == 0)
+            name = "NaN";
+         if(surname.compareTo("") == 0)
+            surname = "NaN";
         this.name=name;
         this.surname=surname;
         switch(role){
