@@ -17,7 +17,7 @@ public class Doctor extends User{
 
     public Agenda getAgenda(String date) throws SQLException {
         ResultSet rs;
-        CallableStatement cst = Interface.connection.prepareCall("call get_personal_agenda(?,?);");
+        CallableStatement cst = Interface.connection.prepareCall("{CALL get_personal_agenda(?,?)}");
 
         cst.setInt(1,this.id);
         cst.setString(2, date);

@@ -283,8 +283,8 @@ drop procedure if exists get_personal_agenda;
 delimiter $$
 create procedure get_personal_agenda(doctor int, a_date date)
 begin
-	select p.name, p.surname, m.date
-    from medical m inner join patient p on m.fk_patient = p.IDCode
+	select d.name, d.surname, p.name, p.surname, m.date
+    from medical m inner join patient p on m.fk_patient = p.IDCode inner join doctor d on m.fk_doctor = d.IDCode 
     where m.fk_doctor = doctor and m.medical_date = a_date;
 end $$
 delimiter ;

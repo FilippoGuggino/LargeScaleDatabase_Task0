@@ -12,9 +12,9 @@ public class Agenda {
         Medical tmp;
         agenda = new Vector<Medical>();
         while(rs.next()) {
-            tmp = new Medical(rs.getString(1),
-                                rs.getString(2),
-                                rs.getString(3));
+            tmp = new Medical(rs.getString(1) + " " + rs.getString(2),
+                                rs.getString(3) + " " + rs.getString(4),
+                                rs.getString(5));
             this.agenda.add(tmp);
         }
     }
