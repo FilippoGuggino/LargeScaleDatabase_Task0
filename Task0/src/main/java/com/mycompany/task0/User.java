@@ -54,8 +54,8 @@ public class User {
         if(idCode != 0)
             return false;
         PreparedStatement ps = Interface.connection.prepareStatement(
-                        "insert into ?"
-                      + "values(?,?);");
+                        " insert into ?"
+                      + " values(?,?);");
         ps.setString(1, role);
         ps.setString(2, name);
         ps.setString(3, surname);

@@ -29,8 +29,8 @@ public class Employee extends User{
         if(patCode == 0 || docCode == 0)
             return false;
         PreparedStatement ps = Interface.connection.prepareStatement(
-                           "Insert into medical" 
-                         + "values(?,?,?,true);");
+                           " Insert into medical" 
+                         + " values(?,?,?,true);");
         ps.setInt(1, docCode);
         ps.setInt(2, patCode);
         ps.setString(3, date);
@@ -44,8 +44,8 @@ public class Employee extends User{
         if(patCode == 0 || docCode == 0)
             return false;
         PreparedStatement ps = Interface.connection.prepareStatement(
-                           "delete from medical" 
-                         + "where fk_doctor = ? and fk_patient = ? and medical_date = ?;");
+                           " delete from medical" 
+                         + " where fk_doctor = ? and fk_patient = ? and medical_date = ?;");
         ps.setInt(1, docCode);
         ps.setInt(2, patCode);
         ps.setString(3, date);
@@ -120,10 +120,10 @@ public class Employee extends User{
     public void printMedicalRequests() throws SQLException{
         PreparedStatement ps = Interface.connection.prepareStatement(
 
-                           "select d.name, d.surname, p.name, p.surname, m.medical_date"
-                         + "medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
-                         + "where approved=false"
-                         + "order by m.medical_date;");
+                           " select d.name, d.surname, p.name, p.surname, m.medical_date"
+                         + " medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
+                         + " where approved=false"
+                         + " order by m.medical_date;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             System.out.println("Doctor " + rs.getString(1) + " " + rs.getString(2) + ", Patient " + rs.getString(3) + " " + rs.getString(4) + ", Date: " + rs.getString(5));
@@ -132,9 +132,9 @@ public class Employee extends User{
     
     public void printDeleteRequests() throws SQLException{
         PreparedStatement ps = Interface.connection.prepareStatement(
-                           "select d.name, d.surname, p.name, p.surname, m.medical_date"
-                         + "(delete_request dq inner join medical m on dq.fk_medical = m.code) inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"                  
-                         + "order by m.medical_date;");
+                           " select d.name, d.surname, p.name, p.surname, m.medical_date"
+                         + " (delete_request dq inner join medical m on dq.fk_medical = m.code) inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"                  
+                         + " order by m.medical_date;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             System.out.println("Doctor " + rs.getString(1) + " " + rs.getString(2) + ", Patient " + rs.getString(3) + " " + rs.getString(4) + ", Date: " + rs.getString(5));
@@ -143,9 +143,9 @@ public class Employee extends User{
     
     public void printMoveRequests() throws SQLException{
         PreparedStatement ps = Interface.connection.prepareStatement(
-                           "select d.name, d.surname, p.name, p.surname, m.medical_date, mq.new_date"
-                         + "(move_request mq inner join medical m on mq.fk_medical = m.code) inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"                  
-                         + "order by m.medical_date;");
+                           " select d.name, d.surname, p.name, p.surname, m.medical_date, mq.new_date"
+                         + " (move_request mq inner join medical m on mq.fk_medical = m.code) inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"                  
+                         + " order by m.medical_date;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             System.out.println("Doctor " + rs.getString(1) + " " + rs.getString(2) + ", Patient " + rs.getString(3) + " " + rs.getString(4) + ", old date: " + rs.getString(5) + "new date: " + rs.getString(6));
@@ -157,9 +157,9 @@ public class Employee extends User{
         int patCode=patient.getIdCode();
         int docCode=doctor.getIdCode();
         
-        String query = "select d.name, d.surname, p.name, p.surname, m.medical_date"
-                     + "from medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
-                     + "where ";
+        String query = " select d.name, d.surname, p.name, p.surname, m.medical_date"
+                     + " from medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
+                     + " where ";
         boolean previous = false;
         if(patCode != 0) {
             query += "m.fk_patient = ?";
@@ -168,13 +168,13 @@ public class Employee extends User{
         if(docCode != 0) {
             if(previous)
                 query += " and ";
-            query += "m.fk_doctor = ?";
+            query += " m.fk_doctor = ?";
             previous = true;
         }
         if(byDate.compareTo("") != 0) {
             if(previous)
                 query += " and ";
-            query += "m.medical_date = ?";
+            query += " m.medical_date = ?";
         }
         query += ";";
         
