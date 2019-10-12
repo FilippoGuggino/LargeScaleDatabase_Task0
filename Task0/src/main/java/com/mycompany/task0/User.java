@@ -13,10 +13,10 @@ import java.sql.*;
  */
 public class User {
     
-    private String name;
-    private String surname;
-    private String role;
-    private int idCode;
+    protected String name;
+    protected String surname;
+    protected String role;
+    protected int idCode;
     
     public User(String name,String surname, String role)throws SQLException{
         this.name=name;
@@ -34,7 +34,7 @@ public class User {
         }
         signIn();
     }
-     private void signIn() throws SQLException{
+     protected void signIn() throws SQLException{
         CallableStatement cs = Interface.connection.prepareCall("{CALL get_code(?,?,?)}");
         cs.setString(1, name);
         cs.setString(2, surname);
