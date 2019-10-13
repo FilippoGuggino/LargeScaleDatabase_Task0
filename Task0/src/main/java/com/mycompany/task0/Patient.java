@@ -26,9 +26,6 @@ import java.sql.SQLException;
  * @author leocecche
  */
 public class Patient extends User {
-	 private String name;
-	 private String surname;
-	 private int id;
 	 
     public Patient (String Name, String Surname) throws SQLException{
         //uses super class constructor
@@ -36,10 +33,10 @@ public class Patient extends User {
     }
     
     //prints string of the schedule of the patient in the format Doctor: name surname, date: xxxx
-    public Schedule printSchedule() throws SQLException {
+    public void printSchedule() throws SQLException {
     	ResultSet rs;
         CallableStatement cst = Interface.connection.prepareCall("{CALL get_personal_schedule(?)}");
-        cst.setInt(1,this.id);
+        cst.setInt(1,this.idCode);
         rs = cst.executeQuery();
         
         while(rs.next()) {
@@ -48,10 +45,13 @@ public class Patient extends User {
     }
     
     //returns true if everything was ok, false if it fails
-    public boolean newMedicalRequest (int docCode, String date) {
+    public boolean newMedicalRequest (Doctor doctor, String date) throws SQLException{
+        if(doctor == null || doctor.getIdCode() == 0)
+            return false;
+        int docCode = doctor.getIdCode();
     	ResultSet rs;
         CallableStatement cst = Interface.connection.prepareCall("{CALL new_medical_request(?,?,?)}");
-        cst.setInt(1,this.id);
+        cst.setInt(1,this.idCode);
         cst.setInt(2, docCode);
         cst.setString(3, date);
         rs = cst.executeQuery();
@@ -60,16 +60,17 @@ public class Patient extends User {
             if(rs.getInt(1) == 1)
                return true;
         }
-        else {
-        	return false; 
-        }
+        return false;
     }
     
     //returns true if everything was ok, false if it fails
-    public boolean deleteMedicalRequest(String docCode,String date) {
+    public boolean deleteMedicalRequest(Doctor doctor,String date) throws SQLException{
+        if(doctor == null || doctor.getIdCode() == 0)
+            return false;
+        int docCode = doctor.getIdCode();
        	ResultSet rs;
         CallableStatement cst = Interface.connection.prepareCall("{CALL new_delete_request(?,?,?)}");
-        cst.setInt(1,this.id);
+        cst.setInt(1,this.idCode);
         cst.setInt(2, docCode);
         cst.setString(3, date);
         rs = cst.executeQuery();
@@ -78,16 +79,17 @@ public class Patient extends User {
             if(rs.getInt(1) == 1)
                return true;
         }
-        else {
-        	return false; 
-        }
+        return false;
     }
     
     //returns true if everything was ok, false if it fails
-    public boolean deleteMedicalRequest(String docCode,String oldDate,String newDate) {
-       	ResultSet rs;
+    public boolean deleteMedicalRequest(Doctor doctor,String oldDate,String newDate) throws SQLException{
+       	if(doctor == null || doctor.getIdCode() == 0)
+            return false;
+        int docCode = doctor.getIdCode();
+        ResultSet rs;
         CallableStatement cst = Interface.connection.prepareCall("{CALL new_move_request(?,?,?,?)}");
-        cst.setInt(1,this.id);
+        cst.setInt(1,this.idCode);
         cst.setInt(2, docCode);
         cst.setString(3, oldDate);
         cst.setString(4, newDate);
