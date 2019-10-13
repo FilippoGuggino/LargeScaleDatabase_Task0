@@ -126,7 +126,7 @@ public class Employee extends User{
      * was correctly handled, false if something went wrong.
      * @param patient a Patient instance used to retrieve the medical delete request.
      * @param doctor a Doctor instance used to retrieve the medical delete request.
-     * @param date the date of the new medical, in the format "YYYY-MM-DD"
+     * @param date the date of the medical to delete, in the format "YYYY-MM-DD"
      * @param approved if its value is 1 then delete request is accepted, otherwise it's rejected.
      * @throws SQLException if an SQL exception occurred retrieving related
      *                      records in the database
