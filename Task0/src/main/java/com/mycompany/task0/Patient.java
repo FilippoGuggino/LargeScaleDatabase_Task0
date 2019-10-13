@@ -26,9 +26,81 @@ import java.sql.SQLException;
  * @author leocecche
  */
 public class Patient extends User {
-  
+	 private String name;
+	 private String surname;
+	 private int id;
+	 
     public Patient (String Name, String Surname) throws SQLException{
         //uses super class constructor
         super(Name,Surname,"p");
     }
+    
+    //prints string of the schedule of the patient in the format Doctor: name surname, date: xxxx
+    public Schedule printSchedule() throws SQLException {
+    	ResultSet rs;
+        CallableStatement cst = Interface.connection.prepareCall("{CALL get_personal_schedule(?)}");
+        cst.setInt(1,this.id);
+        rs = cst.executeQuery();
+        
+        while(rs.next()) {
+        	System.out.println("Doctor " + rs.getString(1) + " " + rs.getString(2) + ",date " + rs.getString(3));
+        }
+    }
+    
+    //returns true if everything was ok, false if it fails
+    public boolean newMedicalRequest (int docCode, String date) {
+    	ResultSet rs;
+        CallableStatement cst = Interface.connection.prepareCall("{CALL new_medical_request(?,?,?)}");
+        cst.setInt(1,this.id);
+        cst.setInt(2, docCode);
+        cst.setString(3, date);
+        rs = cst.executeQuery();
+        
+        if(rs.next()){
+            if(rs.getInt(1) == 1)
+               return true;
+        }
+        else {
+        	return false; 
+        }
+    }
+    
+    //returns true if everything was ok, false if it fails
+    public boolean deleteMedicalRequest(String docCode,String date) {
+       	ResultSet rs;
+        CallableStatement cst = Interface.connection.prepareCall("{CALL new_delete_request(?,?,?)}");
+        cst.setInt(1,this.id);
+        cst.setInt(2, docCode);
+        cst.setString(3, date);
+        rs = cst.executeQuery();
+        
+        if(rs.next()){
+            if(rs.getInt(1) == 1)
+               return true;
+        }
+        else {
+        	return false; 
+        }
+    }
+    
+    //returns true if everything was ok, false if it fails
+    public boolean deleteMedicalRequest(String docCode,String oldDate,String newDate) {
+       	ResultSet rs;
+        CallableStatement cst = Interface.connection.prepareCall("{CALL new_move_request(?,?,?,?)}");
+        cst.setInt(1,this.id);
+        cst.setInt(2, docCode);
+        cst.setString(3, oldDate);
+        cst.setString(4, newDate);
+        rs = cst.executeQuery();
+        
+        if(rs.next()){
+            if(rs.getInt(1) == 1)
+               return true;
+        }
+        else {
+        	return false; 
+        }
+    }
+    
 }
+
