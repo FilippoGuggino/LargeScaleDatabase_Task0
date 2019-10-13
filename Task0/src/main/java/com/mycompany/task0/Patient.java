@@ -83,7 +83,7 @@ public class Patient extends User {
     }
     
     //returns true if everything was ok, false if it fails
-    public boolean deleteMedicalRequest(Doctor doctor,String oldDate,String newDate) throws SQLException{
+    public boolean moveMedicalRequest(Doctor doctor,String oldDate,String newDate) throws SQLException{
        	if(doctor == null || doctor.getIdCode() == 0)
             return false;
         int docCode = doctor.getIdCode();
@@ -99,9 +99,7 @@ public class Patient extends User {
             if(rs.getInt(1) == 1)
                return true;
         }
-        else {
-        	return false; 
-        }
+        return false;
     }
     
 }
