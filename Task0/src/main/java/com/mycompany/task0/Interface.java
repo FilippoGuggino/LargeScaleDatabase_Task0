@@ -238,10 +238,10 @@ public class Interface {
         choice = sc.nextLine();
         switch(choice){
             case "1":
-                System.out.println("Type patient name: ");
+                System.out.println("Type patient first name: ");
                 patName = sc.nextLine();
                 
-                System.out.println("Type patient surname: ");
+                System.out.println("Type patient last name: ");
                 patSurname = sc.nextLine();
                 p=new Patient(patName,patSurname);
                 
@@ -249,10 +249,10 @@ public class Interface {
                     System.out.println("The patient you selected doesn't exist");
                     break;
                 }
-                System.out.println("Type doctor name: ");
+                System.out.println("Type doctor first name: ");
                 docName = sc.nextLine();
                 
-                System.out.println("Type doctor surname: ");
+                System.out.println("Type doctor last name: ");
                 docSurname = sc.nextLine();
                 d=new Doctor(docName,docSurname);
                 
@@ -273,10 +273,10 @@ public class Interface {
                     System.out.println("Invalid date format.");
                 break;
             case "2":
-                System.out.println("Type patient name: ");
+                System.out.println("Type patient first name: ");
                 patName = sc.nextLine();
                 
-                System.out.println("Type patient surname: ");
+                System.out.println("Type patient last name: ");
                 patSurname = sc.nextLine();
                     p=new Patient(patName,patSurname);
                 
@@ -284,10 +284,10 @@ public class Interface {
                     System.out.println("The patient you selected doesn't exist");
                     break;
                 }
-                System.out.println("Type doctor name: ");
+                System.out.println("Type doctor first name: ");
                 docName = sc.nextLine();
                 
-                System.out.println("Type doctor surname: ");
+                System.out.println("Type doctor last name: ");
                 docSurname = sc.nextLine();
                    d=new Doctor(docName,docSurname);
                 
@@ -309,10 +309,10 @@ public class Interface {
                 break;
                 
             case "3":
-                 System.out.println("Type patient name: ");
+                 System.out.println("Type patient first name: ");
                 patName = sc.nextLine();
                 
-                System.out.println("Type patient surname: ");
+                System.out.println("Type patient last name: ");
                 patSurname = sc.nextLine();
                     p=new Patient(patName,patSurname);
                 
@@ -320,10 +320,10 @@ public class Interface {
                     System.out.println("The patient you selected doesn't exist");
                     break;
                 }
-                System.out.println("Type doctor name: ");
+                System.out.println("Type doctor first name: ");
                 docName = sc.nextLine();
                 
-                System.out.println("Type doctor surname: ");
+                System.out.println("Type doctor last name: ");
                 docSurname = sc.nextLine();
                     d=new Doctor(docName,docSurname);
              
@@ -372,9 +372,9 @@ public class Interface {
                             System.out.println("Invalid date format.");
                         break;
                     case "2":
-                        System.out.println("Type the name of the doctor");
+                        System.out.println("Type the first name of the doctor");
                         docName = sc.nextLine();
-                        System.out.println("Type the surname of the doctor");
+                        System.out.println("Type the last name of the doctor");
                         docSurname = sc.nextLine();
                         d=new Doctor(docName,docSurname);
                         if(d.getIdCode()==0){
@@ -384,9 +384,9 @@ public class Interface {
                         employee.printSchedule(null, d, "");
                         break;
                     case "3":
-                        System.out.println("Type the name of the patient");
+                        System.out.println("Type the first name of the patient");
                         patName = sc.nextLine();
-                        System.out.println("Type the surname of the patient");
+                        System.out.println("Type the last name of the patient");
                         patSurname = sc.nextLine();
                         p=new Patient(patName,patSurname);
                         if(p.getIdCode()==0){
@@ -396,9 +396,9 @@ public class Interface {
                         employee.printSchedule(p, null, "");
                         break;
                     case "4":
-                        System.out.println("Type the name of the doctor");
+                        System.out.println("Type the first name of the doctor");
                         docName = sc.nextLine();
-                        System.out.println("Type the surname of the doctor");
+                        System.out.println("Type the last name of the doctor");
                         docSurname = sc.nextLine();
                         d=new Doctor(docName,docSurname);
                         if(d.getIdCode()==0){
@@ -413,9 +413,9 @@ public class Interface {
                             System.out.println("Invalid date format.");
                         break;
                      case "5":
-                        System.out.println("Type the name of the patient");
+                        System.out.println("Type the first name of the patient");
                         patName = sc.nextLine();
-                        System.out.println("Type the surname of the patient");
+                        System.out.println("Type the last name of the patient");
                         patSurname = sc.nextLine();
                         p=new Patient(patName,patSurname);
                         if(p.getIdCode()==0){
@@ -430,18 +430,18 @@ public class Interface {
                             System.out.println("Invalid date format.");
                         break;
                     case "6":
-                        System.out.println("Type the name of the patient");
+                        System.out.println("Type the first name of the patient");
                         patName = sc.nextLine();
-                        System.out.println("Type the surname of the patient");
+                        System.out.println("Type the last name of the patient");
                         patSurname = sc.nextLine();
                         p=new Patient(patName,patSurname);
                         if(p.getIdCode()==0){
                             System.out.println("The patient you selected doesn't exist");
                             break;
                         }
-                        System.out.println("Type the name of the doctor");
+                        System.out.println("Type the first name of the doctor");
                         docName = sc.nextLine();
-                        System.out.println("Type the surname of the doctor");
+                        System.out.println("Type the last name of the doctor");
                         docSurname = sc.nextLine();
                         d=new Doctor(docName,docSurname);
                         if(d.getIdCode()==0){
@@ -459,124 +459,5 @@ public class Interface {
                     return "err";
         }
         return "ok";
-    }
-  /*
-    public static void newMedical(String doctor, String patient, String date) {
-        try(
-                PreparedStatement ps = connection.prepareStatement(
-                           "insert into medical(fk_doctor,fk_patient,medical_date)"
-                         + "values "
-                         + "(?,?,?);");
-                ){
-            ps.setString(1, doctor);
-            ps.setString(2, patient);
-            ps.setString(3, date);
-            int rows = ps.executeUpdate();
-            if(rows == 1)
-                System.out.println("Your medical has been correctly inserted");
-            else
-                System.out.println("Something went wrong, check if medical already exists!");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-    public static void deleteMedical(String doctor, String patient,String date) {
-        try(
-                PreparedStatement ps = connection.prepareStatement(
-                           "delete from medicals"
-                         + "where data=? and fk_dottore=? and fk_paziente=?;");
-                ){
-            ps.setString(1, date);
-            ps.setString(2, doctor);
-            ps.setString(3, patient);
-            int rows = ps.executeUpdate();
-            if(rows == 1)
-                System.out.println("Your medical has been correctly deleted");
-            else
-                System.out.println("Something went wrong, check if medical data is correct!");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-    public static void updateMedical(String doctor, String patient,String oldDate, String newDate) {
-        try(
-                PreparedStatement ps = connection.prepareStatement(
-                           "update medicals"
-                         + "set data = ? "
-                         + "where fk_dottore = ? and fk_paziente = ? and data = ?");
-                ){
-            ps.setString(1, newDate);
-            ps.setString(2, doctor);
-            ps.setString(3, patient);
-            ps.setString(4, oldDate);
-            int rows = ps.executeUpdate();
-            if(rows == 1)
-                System.out.println("Your medical has been correctly modified");
-            else
-                System.out.println("Something went wrong, check if medical data is correct");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
-    public static Boolean signUp(String role,String name, String surname) {
-        try{
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinica", "root", "studenti");
-            PreparedStatement ps = connection.prepareStatement(
-                           "insert into ?(IDCode,name,surname)"
-                         + "values "
-                         + "(?,?,?);");
-            switch(role){
-                case "d":
-                    ps.setString(1, "doctor");
-                    break;
-                case "p":
-                    ps.setString(1, "patient");
-                    break;
-                case "e":
-                    ps.setString(1, "employee");
-                    break;
-            }
-            ps.setString(2, name);
-            ps.setString(3, surname);
-            ps.executeUpdate();
-            return true;
-        
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-    public static Boolean signIn(String role,String idCode) {
-        try{
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinica", "root", "studenti");
-            PreparedStatement ps = connection.prepareStatement(
-                      "select * "
-                    + "from ? "
-                    + "where IDCode=?"
-            );
-            switch(role){
-                case "d":
-                    ps.setString(1, "doctor");
-                    ps.setString(2, idCode);
-                    break;
-                case "p":
-                    ps.setString(1, "patient");
-                    ps.setString(2, idCode);
-                    break;
-                case "e":
-                    ps.setString(1, "employee");
-                    ps.setString(2, idCode);
-                    break;
-            }
-            ResultSet rs = ps.executeQuery();
-            if(rs==null)
-                return false;
-            return true;
-        
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-        */
+    }  
 }
