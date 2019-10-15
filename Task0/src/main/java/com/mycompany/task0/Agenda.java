@@ -43,9 +43,8 @@ public class Agenda {
         if(agenda.isEmpty())
             return "No medical in the Agenda.\n";
         String tmp = "";
-        for(int i = 0; i < agenda.size(); i++) {
+        for(int i = 0; i < agenda.size(); i++)
             tmp += agenda.remove(i).toString() + "\n";
-        }
         return tmp;
     }
 

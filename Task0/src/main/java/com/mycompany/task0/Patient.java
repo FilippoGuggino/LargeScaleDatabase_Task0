@@ -140,9 +140,7 @@ public class Patient extends User {
             if(rs.getInt(1) == 1)
                return true;
         }
-        else {
-        	return false; 
-        }
+        return false;
     }
     
 }

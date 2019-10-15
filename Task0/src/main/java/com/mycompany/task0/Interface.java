@@ -31,7 +31,15 @@ import java.util.Scanner;
 public class Interface {
     public static Connection connection;
     public static Scanner sc=new Scanner(System.in);
-    
+
+    static{
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinic?user=root&pass=");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void showMenu()throws SQLException{
         String role = "";
         String type = "";
@@ -100,7 +108,7 @@ public class Interface {
         while(true){
             switch(role){
                 case "d":
-                    Doctor d=(Doctor)user;
+                    Doctor d = (Doctor)user;
                     choicesDoc(d);
                     break;
                 case "p":
