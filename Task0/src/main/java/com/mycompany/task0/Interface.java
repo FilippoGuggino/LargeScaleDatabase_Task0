@@ -34,7 +34,11 @@ public class Interface {
 
     static{
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinic?user=root&pass=");
+            String url= "jdbc:mysql://localhost:3306/clinic?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET";
+String user= "root";
+String pass= "";
+connection= DriverManager.getConnection(url, user, pass);
+   //         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinic?user=root&pass=");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,19 +55,11 @@ public class Interface {
         System.out.println("Type \"d\" if you are a doctor, \"p\" if you are a patient, \"e\" if you are an employee: ");
         role = sc.nextLine();
         while(!exit.equals("q")){
-            switch (role) {
-                case "d":
-                    exit = "q";
-                    break;
-                case "p":
-                    exit = "q";
-                    break;
-                case "e":
-                    exit = "q";
-                    break;
-                default:
-                    System.out.println("Error, type d, p or e ");
-                    break;
+            if(role.equals("d")||role.equals("p")||role.equals("e"))
+                exit="q";
+            else{
+                System.out.println("Error, type d, p or e ");
+                role = sc.nextLine();
             }
         }
         exit="";
@@ -73,35 +69,26 @@ public class Interface {
         while(!exit.equals("q")){
             switch (type) {
                 case "1": 
-                    System.out.println("Type your first name:");
-                    name = sc.nextLine();
-                    System.out.println("Type your last name:");
-                    surname = sc.nextLine();
-                    user=new User(name,surname,role);
-                   
-                    if(user.getIdCode()!=0)
+                    user=createUser(role);
+                    if(user.getIdCode()!=0){
+                        System.out.println("Authentication succeded");
                         exit="q";
+                    }
                     else
-                        System.out.println("Autentication failed");
-                    break;
-                    
+                        System.out.println("Authentication failed");
+                    break;        
                 case "2":
-                    System.out.println("Type your first name:");
-                    name = sc.nextLine();
-                    System.out.println("type your last name:");
-                    surname = sc.nextLine();
-                    
-                        user=new User(name,surname,role);             
-                        if(user.signUp()){
-                            exit="q";
-                            System.out.println("Registration successfully completed!");
-                        }
-                        else
-                            System.out.println("User already exists");
-                     
+                    user=createUser(role);             
+                    if(user.signUp(role)){
+                        exit="q";
+                        System.out.println("Registration successfully completed!");
+                    }
+                    else
+                        System.out.println("User already exists");
                     break;
                 default:
                     System.out.println("Error, type 1 or 2");
+                    type = sc.nextLine();
                     break;
             }
         }
@@ -122,11 +109,28 @@ public class Interface {
             }
         }
     }
+    public static Boolean verifyDateFormat(String date){
+        if (date.matches("\\d{4}-\\d{2}-\\d{2}")) {
+           return true;
+        }
+        return false;
+    }
     
-     /*
-        codFisc -> dottore
-        date -> data
-    */
+    public static User createUser(String role)throws SQLException{
+        System.out.println("Type your first name:");
+        String name = sc.nextLine();
+        System.out.println("type your last name:");
+        String surname = sc.nextLine(); 
+        switch(role){
+            case "d":
+                return new Doctor(name,surname);
+            case "p":
+                return new Patient(name,surname);
+            case "e":
+                return new Employee(name,surname);
+        }
+        return null;
+    }
     public static String choicesDoc(Doctor doctor)throws SQLException{
         String choice = "";
         String date = "";
@@ -140,24 +144,19 @@ public class Interface {
                     System.out.println("Type date in the format YYYY-MM-DD:");
                     date = sc.nextLine();
                     if(verifyDateFormat(date)==true)
-                        doctor.showAgenda(date);              
+                        System.out.println(doctor.showAgenda(date));              
                     else
                         System.out.println("Invalid date format.");
                     break;
                 case "q":
-                    return "q";
+                    System.exit(1);
                 default:
                     System.out.println("Invalid command.");
                     return "err";
             }
         }
     }
-    public static Boolean verifyDateFormat(String date){
-        if (date.matches("\\d{4}-\\d{2}-\\d{2}")) {
-           return true;
-        }
-        return false;
-    }
+    
     /*  
         codFisc -> paziente
         docCodFisc -> dottore
@@ -185,7 +184,6 @@ public class Interface {
                     newMedical(docIdCode, patIdCode, date);
                 else
                     System.out.println("Invalid date format.");
-
                 break;
             case "2":
                 System.out.println("Type doctor identification: ");
@@ -196,7 +194,6 @@ public class Interface {
                     deleteMedical(docIdCode, patIdCode, date);
                 else
                     System.out.println("Invalid date format.");
-
                 break;
             case "3":
                 String finalDate = "";
@@ -215,7 +212,6 @@ public class Interface {
                     updateMedical( docIdCode, patIdCode,date, finalDate);
                 else
                     System.out.println("Invalid date format.");
-
                 break;
             case "q":
                 return "q";
