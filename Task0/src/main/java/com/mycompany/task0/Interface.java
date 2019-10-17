@@ -100,7 +100,7 @@ connection= DriverManager.getConnection(url, user, pass);
                     break;
                 case "p":
                     Patient p=(Patient)user;
-                //    choicesPat(p);
+                    choicesPat(p);
                     break;
                 case "e":
                     Employee e=(Employee)user;
@@ -109,13 +109,20 @@ connection= DriverManager.getConnection(url, user, pass);
             }
         }
     }
+    public static Boolean verifyDateFormat(){
+        System.out.println("Type date in the format YYYY-MM-DD:");
+        String date = sc.nextLine();
+        if (date.matches("\\d{4}-\\d{2}-\\d{2}")) {
+           return true;
+        }
+        return false;
+    }
     public static Boolean verifyDateFormat(String date){
         if (date.matches("\\d{4}-\\d{2}-\\d{2}")) {
            return true;
         }
         return false;
     }
-    
     public static User createUser(String role)throws SQLException{
         System.out.println("Type your first name:");
         String name = sc.nextLine();
@@ -131,6 +138,13 @@ connection= DriverManager.getConnection(url, user, pass);
         }
         return null;
     }
+    public static Doctor createDoctor()throws SQLException{
+        System.out.println("Type the doctor's first name:");
+        String name = sc.nextLine();
+        System.out.println("type the doctor's last name:");
+        String surname = sc.nextLine(); 
+        return new Doctor(name,surname);
+    }
     public static String choicesDoc(Doctor doctor)throws SQLException{
         String choice = "";
         String date = "";
@@ -140,10 +154,8 @@ connection= DriverManager.getConnection(url, user, pass);
             System.out.println("\tq -> Quit");
             choice = sc.nextLine();
             switch(choice){
-                case "1": 
-                    System.out.println("Type date in the format YYYY-MM-DD:");
-                    date = sc.nextLine();
-                    if(verifyDateFormat(date)==true)
+                case "1":        
+                    if(verifyDateFormat()==true)
                         System.out.println(doctor.showAgenda(date));              
                     else
                         System.out.println("Invalid date format.");
@@ -156,71 +168,73 @@ connection= DriverManager.getConnection(url, user, pass);
             }
         }
     }
-    
-    /*  
-        codFisc -> paziente
-        docCodFisc -> dottore
-        date -> data iniziale
-        finalDate -> data finale
-    *//*
-    public static String choicesPat(String patIdCode){
+  
+    public static String choicesPat(Patient patient)throws SQLException{
         String choice = "";
         String docIdCode = "";
         String date = "";
         System.out.println("Type command: ");
-        System.out.println("\t1 -> Create Medical");
-        System.out.println("\t2 -> Drop Medical");
-        System.out.println("\t3 -> Update Medical date");
+        System.out.println("\t1 -> Make medical request");
+        System.out.println("\t2 -> Make medical drop request");
+        System.out.println("\t3 -> Make medical move request");        
+        System.out.println("\t4 -> View personal schedule");
         System.out.println("\tq -> Quit");
         choice = sc.nextLine();
+        Doctor doctor=null;
         switch(choice){
             case "1":
-                System.out.println("Type doctor ID Code: ");
-                docIdCode = sc.nextLine();
-                
-                System.out.println("Type date in the format YYYY-MM-DD:");
-                date = sc.nextLine();
-                if(verifyDateFormat(date)==true)
-                    newMedical(docIdCode, patIdCode, date);
+                doctor=createDoctor();
+                if(doctor.getIdCode()==0){
+                    System.out.println("The selected doctor doesn't exist");
+                    break;
+                }
+                if(verifyDateFormat()==true)
+                    patient.newMedicalRequest(doctor, date);
                 else
                     System.out.println("Invalid date format.");
                 break;
             case "2":
-                System.out.println("Type doctor identification: ");
-                docIdCode = sc.nextLine();
-                System.out.println("Type date in the format YYYY-MM-DD:");
-                date = sc.nextLine();
-                if(verifyDateFormat(date)==true)
-                    deleteMedical(docIdCode, patIdCode, date);
+                doctor=createDoctor();
+                if(doctor.getIdCode()==0){
+                    System.out.println("The selected doctor doesn't exist");
+                    break;
+                }
+                if(verifyDateFormat()==true)
+                    patient.deleteMedicalRequest(doctor, date);
                 else
                     System.out.println("Invalid date format.");
                 break;
             case "3":
-                String finalDate = "";
-                System.out.println("Type doctor identification: ");
-                docIdCode = sc.nextLine();
-                System.out.println("Type curret date of medical in the format YYYY-MM-DD:");
+                doctor=createDoctor();
+                if(doctor.getIdCode()==0){
+                    System.out.println("The selected doctor doesn't exist");
+                    break;
+                }
+                System.out.println("Type current date of medical in the format YYYY-MM-DD:");
                 date = sc.nextLine();
                 if(verifyDateFormat(date)==false){
                     System.out.println("Invalid date format.");
                     break;
                 }
-                System.out.println("Type final date of medical in the format YYYY-MM-DD:");
-                finalDate = sc.nextLine();
+                System.out.println("Type new date of medical in the format YYYY-MM-DD:");
+                String finalDate = sc.nextLine();
                 //TODO funzione sposta appuntamento
                 if(verifyDateFormat(finalDate)==true)
-                    updateMedical( docIdCode, patIdCode,date, finalDate);
+                    patient.newMoveRequest(doctor,date, finalDate);
                 else
                     System.out.println("Invalid date format.");
                 break;
+            case "4":
+                patient.printSchedule();
+                break;
             case "q":
-                return "q";
+                System.exit(1);
             default:
                 System.out.println("Invalid command.");
                 return "err";
         }
         return "ok";
-    }*/
+    }
     public static String choicesEmp(Employee employee)throws SQLException{
         String choice = "";
         String docName = "";
