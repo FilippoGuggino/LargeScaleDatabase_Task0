@@ -238,14 +238,14 @@ public class Employee extends User{
     
     /**
      * prints the schedule of next medicals, filtering results by a patient, a doctor, a date
-     * or any combination of these three paramethers; to prevent a paramether from filtering results
+     * or any combination of these three parameters; to prevent a parameter from filtering results
      * the null value can be assigned to patient and doctor, and the empty string to byDate.
-     * @param patient a Patient instance, if its value is not null then this paramether is used
+     * @param patient a Patient instance, if its value is not null then this parameter is used
      *                to filter the result set so that only medicals involving this patient will be shown
-     * @param doctor  a Doctor instance, if its value is not null then this paramether is used
+     * @param doctor  a Doctor instance, if its value is not null then this parameter is used
      *                to filter the result set so that only medicals involving this doctor will be shown
      * @param byDate  a String that may contain either an empty string or a date in "YYYY-MM-DD" format:
-     *                in the first case this paramether isn't used to filter the result set,
+     *                in the first case this parameter isn't used to filter the result set,
      *                in the second case only medicals scheduled in this date will be shown
      * @throws SQLException if an SQL exception occurred while preparing or executing the query
      */

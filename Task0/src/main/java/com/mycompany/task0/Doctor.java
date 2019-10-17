@@ -17,15 +17,9 @@
 package com.mycompany.task0;
 
 import javax.xml.transform.Result;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Doctor extends User{
-    private String name;
-    private String surname;
-    private int id;
 
     public Doctor(String name, String surname) throws SQLException {
         super(name, surname, "d");
@@ -33,9 +27,10 @@ public class Doctor extends User{
 
     public Agenda getAgenda(String date) throws SQLException {
         ResultSet rs;
-        CallableStatement cst = Interface.connection.prepareCall("{CALL get_personal_agenda(?,?)}");
+        PreparedStatement cst = Interface.connection.prepareCall("{CALL get_personal_agenda(?,?)}");
 
-        cst.setInt(1,this.id);
+        System.out.println(id);
+        cst.setInt(1,id);
         cst.setString(2, date);
         rs = cst.executeQuery();
 
