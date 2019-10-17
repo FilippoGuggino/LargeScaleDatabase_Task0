@@ -105,8 +105,6 @@ public class Employee extends User{
         
         if(patCode == 0 || docCode == 0)
             return false;
-       
-        
         CallableStatement cs = Interface.connection.prepareCall("{CALL handle_medical_request(?,?,?,?)}");
         cs.setInt(1, patCode);
         cs.setInt(2, docCode);

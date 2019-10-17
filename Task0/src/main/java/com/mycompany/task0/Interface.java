@@ -145,6 +145,14 @@ connection= DriverManager.getConnection(url, user, pass);
         String surname = sc.nextLine(); 
         return new Doctor(name,surname);
     }
+    public static Patient createPatient()throws SQLException{
+        System.out.println("Type patient first name: ");
+        String patName = sc.nextLine();
+        System.out.println("Type patient last name: ");
+        String patSurname = sc.nextLine();
+        return new Patient(patName,patSurname);
+    }
+
     public static String choicesDoc(Doctor doctor)throws SQLException{
         String choice = "";
         String date = "";
@@ -245,9 +253,9 @@ connection= DriverManager.getConnection(url, user, pass);
         Doctor d=null;
         Patient p=null;
         System.out.println("Type command: ");
-        System.out.println("\t1 -> Create Medical");
-        System.out.println("\t2 -> Drop Medical");
-        System.out.println("\t3 -> Update Medical date");
+        System.out.println("\t1 -> Handle medical request");
+        System.out.println("\t2 -> Handle medical drop request");
+        System.out.println("\t3 -> Handle medical update request");
         System.out.println("\t4 -> View Medical requests");
         System.out.println("\t5 -> View Delete requests");
         System.out.println("\t6 -> View Move requests");
@@ -256,60 +264,32 @@ connection= DriverManager.getConnection(url, user, pass);
         choice = sc.nextLine();
         switch(choice){
             case "1":
-                System.out.println("Type patient first name: ");
-                patName = sc.nextLine();
-                
-                System.out.println("Type patient last name: ");
-                patSurname = sc.nextLine();
-                p=new Patient(patName,patSurname);
-                
+                p=createPatient();
                 if(p.getIdCode()==0){
                     System.out.println("The patient you selected doesn't exist");
                     break;
                 }
-                System.out.println("Type doctor first name: ");
-                docName = sc.nextLine();
-                
-                System.out.println("Type doctor last name: ");
-                docSurname = sc.nextLine();
-                d=new Doctor(docName,docSurname);
-                
-                
+                d=createDoctor();
                 if(d.getIdCode()==0){
                     System.out.println("The doctor you selected doesn't exist");
                     break;
                 }
-                System.out.println("Type date in the format YYYY-MM-DD:");
-                date = sc.nextLine();
-                if(verifyDateFormat(date)==true){
+                if(verifyDateFormat()==true){
                     System.out.println("Type 0 if you want to approve the request");
                     choice = sc.nextLine();
-                        employee.handleMedicalRequest(p,d, date,Integer.parseInt(choice));
-                 
+                    employee.handleMedicalRequest(p,d, date,Integer.parseInt(choice));
+                    System.out.println("Operation succeeded");
                 }
                 else
                     System.out.println("Invalid date format.");
                 break;
             case "2":
-                System.out.println("Type patient first name: ");
-                patName = sc.nextLine();
-                
-                System.out.println("Type patient last name: ");
-                patSurname = sc.nextLine();
-                    p=new Patient(patName,patSurname);
-                
+                p=createPatient();
                 if(p.getIdCode()==0){
                     System.out.println("The patient you selected doesn't exist");
                     break;
                 }
-                System.out.println("Type doctor first name: ");
-                docName = sc.nextLine();
-                
-                System.out.println("Type doctor last name: ");
-                docSurname = sc.nextLine();
-                   d=new Doctor(docName,docSurname);
-                
-                
+                d=createDoctor();
                 if(d.getIdCode()==0){
                     System.out.println("The doctor you selected doesn't exist");
                     break;
@@ -327,33 +307,18 @@ connection= DriverManager.getConnection(url, user, pass);
                 break;
                 
             case "3":
-                 System.out.println("Type patient first name: ");
-                patName = sc.nextLine();
-                
-                System.out.println("Type patient last name: ");
-                patSurname = sc.nextLine();
-                    p=new Patient(patName,patSurname);
-                
+                p=createPatient();
                 if(p.getIdCode()==0){
                     System.out.println("The patient you selected doesn't exist");
                     break;
                 }
-                System.out.println("Type doctor first name: ");
-                docName = sc.nextLine();
-                
-                System.out.println("Type doctor last name: ");
-                docSurname = sc.nextLine();
-                    d=new Doctor(docName,docSurname);
-             
+                d=createDoctor();
                 if(d.getIdCode()==0){
                     System.out.println("The doctor you selected doesn't exist");
                     break;
                 }
-               
-                System.out.println("Type curret date of medical in the format YYYY-MM-DD:");
-                date = sc.nextLine();
-                //TODO funzione sposta appuntamento
-                if(verifyDateFormat(date)==true){
+
+                if(verifyDateFormat()==true){
                     System.out.println("Type 0 if you want to approve the request");
                     choice = sc.nextLine();
                     employee.handleMoveRequest(p,d, date,Integer.parseInt(choice));                  
