@@ -45,6 +45,6 @@ class Medical {
     */
     @Override
     public String toString(){
-        return "Doctor name: " + docName + "Patient name: " + patName + "Medical Date: " + date;
+        return "Doctor name: " + docName + " Patient name: " + patName + " Medical Date: " + date;
     }
 }

@@ -49,7 +49,7 @@ public class Patient extends User {
     public void printSchedule() throws SQLException {
     	ResultSet rs;
         CallableStatement cst = Interface.connection.prepareCall("{CALL get_personal_schedule(?)}");
-        cst.setInt(1,this.idCode);
+        cst.setInt(1, id);
         rs = cst.executeQuery();
         
         while(rs.next()) {
@@ -73,7 +73,7 @@ public class Patient extends User {
         int docCode = doctor.getIdCode();
     	ResultSet rs;
         CallableStatement cst = Interface.connection.prepareCall("{CALL new_medical_request(?,?,?)}");
-        cst.setInt(1,this.idCode);
+        cst.setInt(1,id);
         cst.setInt(2, docCode);
         cst.setString(3, date);
         rs = cst.executeQuery();
@@ -101,7 +101,7 @@ public class Patient extends User {
         int docCode = doctor.getIdCode();
        	ResultSet rs;
         CallableStatement cst = Interface.connection.prepareCall("{CALL new_delete_request(?,?,?)}");
-        cst.setInt(1,this.idCode);
+        cst.setInt(1,id);
         cst.setInt(2, docCode);
         cst.setString(3, date);
         rs = cst.executeQuery();
@@ -130,7 +130,7 @@ public class Patient extends User {
         int docCode = doctor.getIdCode();
         ResultSet rs;
         CallableStatement cst = Interface.connection.prepareCall("{CALL new_move_request(?,?,?,?)}");
-        cst.setInt(1,this.idCode);
+        cst.setInt(1,id);
         cst.setInt(2, docCode);
         cst.setString(3, oldDate);
         cst.setString(4, newDate);
