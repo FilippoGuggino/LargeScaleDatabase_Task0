@@ -26,8 +26,7 @@ public class User {
     
     protected String name;
     protected String surname;
-    protected String role;
-    protected int idCode;
+    protected int id;
     
     public User(String name,String surname, String role)throws SQLException{
         if(name.compareTo("") == 0)
@@ -38,38 +37,50 @@ public class User {
         this.surname=surname;
         switch(role){
             case "d":
-                this.role="doctor";
+                signIn("doctor");
                 break;
             case "p":
-                this.role="patient";
+                signIn("patient");
                 break;
             case "e":
-                this.role="employee";
+                signIn("employee");
                 break;
         }
-        signIn();
     }
-     protected void signIn() throws SQLException{
+     protected void signIn(String role) throws SQLException{
         CallableStatement cs = Interface.connection.prepareCall("{CALL get_code(?,?,?)}");
         cs.setString(1, name);
         cs.setString(2, surname);
         cs.setString(3,role);
         ResultSet rs = cs.executeQuery();
         if(rs.next())
-            this.idCode = rs.getInt(1);
+            id = rs.getInt(1);
         else 
-            idCode=0;
+            id=0;
     }
-    
-    public boolean signUp() throws SQLException{
-        if(idCode != 0)
+     
+    /* Returns false if the user is already registered*/
+    public boolean signUp(String role) throws SQLException{
+        if(id != 0)
             return false;
+        switch(role){
+            case "d":
+                role="doctor";
+                break;
+            case "p":
+                role="patient";
+                break;
+            case "e":
+                role="employee";
+                break;
+        }
         PreparedStatement ps = Interface.connection.prepareStatement(
-                        " insert into ?"
-                      + " values(?,?);");
-        ps.setString(1, role);
+                  //      " INSERT INTO ? (name,surname)"
+                //      + " values('?','?')");
+        "insert into "+role+"(name,surname) values('"+name+"','"+surname+"');");
+     /*   ps.setString(1, role);
         ps.setString(2, name);
-        ps.setString(3, surname);
+        ps.setString(3, surname);*/
         int rs = ps.executeUpdate();
         if(rs > 0) {
             return true;
@@ -77,6 +88,6 @@ public class User {
         return false;
     }
     public int getIdCode(){
-        return idCode;
+        return id;
     }
 }
