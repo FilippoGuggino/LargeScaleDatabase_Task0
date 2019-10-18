@@ -36,7 +36,7 @@ public class Interface {
         try {
             String url= "jdbc:mysql://localhost:3306/clinic?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET";
 String user= "root";
-String pass= "";
+String pass= "bricifebolove97";
 connection= DriverManager.getConnection(url, user, pass);
    //         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinic?user=root&pass=");
         } catch (SQLException e) {
@@ -164,6 +164,7 @@ connection= DriverManager.getConnection(url, user, pass);
             switch(choice){
                 case "1":        
                     if(verifyDateFormat()==true)
+
                         System.out.println(doctor.showAgenda(date));              
                     else
                         System.out.println("Invalid date format.");
@@ -196,7 +197,9 @@ connection= DriverManager.getConnection(url, user, pass);
                     System.out.println("The selected doctor doesn't exist");
                     break;
                 }
-                if(verifyDateFormat()==true)
+                System.out.println("Type date in the format YYYY-MM-DD:");
+                date = sc.nextLine();
+                if(verifyDateFormat(date)==true)
                     patient.newMedicalRequest(doctor, date);
                 else
                     System.out.println("Invalid date format.");
@@ -207,7 +210,9 @@ connection= DriverManager.getConnection(url, user, pass);
                     System.out.println("The selected doctor doesn't exist");
                     break;
                 }
-                if(verifyDateFormat()==true)
+                System.out.println("Type date in the format YYYY-MM-DD:");
+                date = sc.nextLine();
+                if(verifyDateFormat(date)==true)
                     patient.deleteMedicalRequest(doctor, date);
                 else
                     System.out.println("Invalid date format.");

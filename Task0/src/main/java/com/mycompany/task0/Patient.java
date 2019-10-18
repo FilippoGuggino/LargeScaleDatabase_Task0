@@ -48,7 +48,7 @@ public class Patient extends User {
     //prints string of the schedule of the patient in the format Doctor: name surname, date: xxxx
     public void printSchedule() throws SQLException {
     	ResultSet rs;
-        CallableStatement cst = Interface.connection.prepareCall("{CALL get_personal_schedule(?)}");
+        PreparedStatement cst = Interface.connection.prepareCall("{CALL get_personal_schedule(?)}");
         cst.setInt(1,this.id);
         rs = cst.executeQuery();
         
@@ -68,22 +68,15 @@ public class Patient extends User {
     
     //returns true if everything was ok, false if it fails
     public boolean newMedicalRequest (Doctor doctor, String date) throws SQLException{
-                System.out.println("ccc2c");
         if(doctor == null || doctor.getIdCode() == 0)
             return false;
         int docCode = doctor.getIdCode();
     	ResultSet rs;
-        CallableStatement cst = Interface.connection.prepareCall("{CALL new_medical_request(?,?,?)}");
+        PreparedStatement cst = Interface.connection.prepareCall("{CALL new_medical_request(?,?,?)}");
         cst.setInt(1,id);
         cst.setInt(2, docCode);
         cst.setString(3, date); 
-        rs = cst.executeQuery();
-        System.out.println("cccc");
-        if(rs.next()){
-            if(rs.getInt(1) == 1)
-               return true;
-        }
-        System.out.println("cc1");
+        cst.executeUpdate();
         return false;
     }
     
@@ -102,7 +95,7 @@ public class Patient extends User {
             return false;
         int docCode = doctor.getIdCode();
        	ResultSet rs;
-        CallableStatement cst = Interface.connection.prepareCall("{CALL new_delete_request(?,?,?)}");
+        PreparedStatement cst = Interface.connection.prepareCall("{CALL new_delete_request(?,?,?)}");
         cst.setInt(1,this.id);
         cst.setInt(2, docCode);
         cst.setString(3, date);
@@ -131,7 +124,7 @@ public class Patient extends User {
             return false;
         int docCode = doctor.getIdCode();
         ResultSet rs;
-        CallableStatement cst = Interface.connection.prepareCall("{CALL new_move_request(?,?,?,?)}");
+        PreparedStatement cst = Interface.connection.prepareCall("{CALL new_move_request(?,?,?,?)}");
         cst.setInt(1,this.id);
         cst.setInt(2, docCode);
         cst.setString(3, oldDate);
