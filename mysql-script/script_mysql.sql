@@ -272,7 +272,7 @@ drop procedure if exists get_personal_schedule;
 delimiter $$
 create procedure get_personal_schedule(patient int)
 begin
-	select d.name, d.surname, m.date
+	select d.name, d.surname, m.medical_date
     from medical m inner join doctor d on m.fk_doctor = d.IDCode 
     where m.fk_patient = patient;
 end $$
