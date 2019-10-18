@@ -36,7 +36,7 @@ public class Interface {
         try {
             String url= "jdbc:mysql://localhost:3306/clinic?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET";
 String user= "root";
-String pass= "bricifebolove97";
+String pass= "";
 connection= DriverManager.getConnection(url, user, pass);
    //         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/clinic?user=root&pass=");
         } catch (SQLException e) {
