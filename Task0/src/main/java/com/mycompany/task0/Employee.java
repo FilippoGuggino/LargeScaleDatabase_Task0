@@ -193,7 +193,7 @@ public class Employee extends User{
         PreparedStatement ps = Interface.connection.prepareStatement(
 
                            " select d.name, d.surname, p.name, p.surname, m.medical_date"
-                         + " medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
+                         + " from medical m inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
                          + " where approved=false"
                          + " order by m.medical_date;");
         ResultSet rs = ps.executeQuery();
@@ -210,7 +210,7 @@ public class Employee extends User{
     public void printDeleteRequests() throws SQLException{
         PreparedStatement ps = Interface.connection.prepareStatement(
                            " select d.name, d.surname, p.name, p.surname, m.medical_date"
-                         + " (delete_request dq inner join medical m on dq.fk_medical = m.code) inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"                  
+                         + " from (delete_request dq inner join medical m on dq.fk_medical = m.code) inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
                          + " order by m.medical_date;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
@@ -226,11 +226,11 @@ public class Employee extends User{
     public void printMoveRequests() throws SQLException{
         PreparedStatement ps = Interface.connection.prepareStatement(
                            " select d.name, d.surname, p.name, p.surname, m.medical_date, mq.new_date"
-                         + " (move_request mq inner join medical m on mq.fk_medical = m.code) inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"                  
+                         + " from (move_request mq inner join medical m on mq.fk_medical = m.code) inner join doctor d on m.fk_doctor = d.IDCode inner join patient p on m.fk_patient = p.IDCode"
                          + " order by m.medical_date;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
-            System.out.println("Doctor " + rs.getString(1) + " " + rs.getString(2) + ", Patient " + rs.getString(3) + " " + rs.getString(4) + ", old date: " + rs.getString(5) + "new date: " + rs.getString(6));
+            System.out.println("Doctor " + rs.getString(1) + " " + rs.getString(2) + ", Patient " + rs.getString(3) + " " + rs.getString(4) + ", old date: " + rs.getString(5) + " new date: " + rs.getString(6));
         }
     }
     

@@ -442,6 +442,8 @@ connection= DriverManager.getConnection(url, user, pass);
                         System.out.println("Invalid command.");
                         break;
                 }
+                break;
+
                 default:
                     System.out.println("Invalid command.");
                     return "err";
