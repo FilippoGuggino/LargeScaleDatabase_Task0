@@ -26,7 +26,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author admin
+ * @author zacca
  */
 public class Interface {
     public static Connection connection;
